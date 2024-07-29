@@ -25,7 +25,9 @@ public class CategoryServiceImpl implements CategoryService{
     private Long nextId = 1L;
     @Override
     public List<Category> getAllCategories() {
-
+        List<Category> categories = categoryRepository.findAll();
+        if(categories.isEmpty())
+            throw new APIException("No Category Created Till Now.");
         return categoryRepository.findAll();
     }
 
