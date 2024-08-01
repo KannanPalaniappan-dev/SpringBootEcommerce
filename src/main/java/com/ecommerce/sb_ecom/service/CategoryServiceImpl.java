@@ -3,6 +3,7 @@ package com.ecommerce.sb_ecom.service;
 import com.ecommerce.sb_ecom.exceptions.APIException;
 import com.ecommerce.sb_ecom.exceptions.ResourceNotFoundException;
 import com.ecommerce.sb_ecom.model.Category;
+import com.ecommerce.sb_ecom.payload.CategoryResponse;
 import com.ecommerce.sb_ecom.repositories.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,7 +19,7 @@ public class CategoryServiceImpl implements CategoryService{
 
     private Long nextId = 1L;
     @Override
-    public List<Category> getAllCategories() {
+    public CategoryResponse getAllCategories() {
         List<Category> categories = categoryRepository.findAll();
         if(categories.isEmpty())
             throw new APIException("No Category Created Till Now.");
