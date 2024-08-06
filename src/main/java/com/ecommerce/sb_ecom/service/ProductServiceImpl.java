@@ -3,7 +3,6 @@ package com.ecommerce.sb_ecom.service;
 import com.ecommerce.sb_ecom.exceptions.ResourceNotFoundException;
 import com.ecommerce.sb_ecom.model.Category;
 import com.ecommerce.sb_ecom.model.Product;
-import com.ecommerce.sb_ecom.payload.CategoryDTO;
 import com.ecommerce.sb_ecom.payload.ProductDTO;
 import com.ecommerce.sb_ecom.payload.ProductResponse;
 import com.ecommerce.sb_ecom.repositories.CategoryRepository;
@@ -13,7 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class ProductServiceImpl implements ProductService{
@@ -25,7 +23,8 @@ public class ProductServiceImpl implements ProductService{
     private ModelMapper modelMapper;
 
     @Override
-    public ProductDTO addProduct(Long categoryId, Product product) {
+    public ProductDTO addProduct(Long categoryId, ProductDTO productDTO) {
+        Product product = modelMapper.map(productDTO,Product.class);
         Category category = categoryRepository.findById(categoryId).
                 orElseThrow(()->new ResourceNotFoundException("Category","categoryId",categoryId));
 
@@ -74,7 +73,8 @@ public class ProductServiceImpl implements ProductService{
     }
 
     @Override
-    public ProductDTO updateProduct(Long productId, Product product) {
+    public ProductDTO updateProduct(Long productId, ProductDTO productDTO) {
+        Product product = modelMapper.map(productDTO,Product.class);
         Product productFromDb = productRepository.findById(productId)
                 .orElseThrow(()->new ResourceNotFoundException("Product","productId",productId));
 
